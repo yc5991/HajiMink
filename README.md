@@ -8,7 +8,7 @@ HajiMink 的 Agent Control 网关面向个人使用，网页与桌面共用原�
 
 ## 1 当前状态
 
-当前 Windows x64 发行准备版本为 `0.2.2`，版本号来自 `package.json`。程序尚未签名，Windows 可能显示安全提示。使用者已反馈在自己的环境中远程访问成功；其他隧道、认证方式及全新系统仍需分别验收
+当前 Windows x64 发行版本为 `0.2.2`，版本号来自 `package.json`。程序尚未签名，Windows 可能显示安全提示。使用者已反馈在自己的环境中远程访问成功；其他隧道、认证方式及全新系统仍需分别验收
 
 ### 下载和启动
 
@@ -97,7 +97,7 @@ npm run package:desktop:win # 构建包含固定运行环境的未签名 Windows
 
 桌面联调脚本会读取当前用户的 Codex 项目和会话目录，不发送、修改或中断任务
 
-Windows 程序包包含隔离构建的网页、网关、生产依赖及固定 Node.js 运行环境。其他服务商的桌面 Tunnel 管理、异常自动重试、公开发布和跨平台安装验收仍待完成，详见 [桌面开发说明](docs/DESKTOP.md)
+Windows 程序包包含隔离构建的网页、网关、生产依赖及固定 Node.js 运行环境。其他服务商的桌面 Tunnel 管理、异常自动重试和跨平台安装验收仍待完成，详见 [桌面开发说明](docs/DESKTOP.md)
 
 开发桌面版时使用 `npm run build:desktop:fixture`，网页和网关会输出到 `.local/hajimink-stage`。`npm run build` 会写入项目根目录的 `dist` 与 `dist-server`，接管线上服务前不要在运行目录执行它
 
