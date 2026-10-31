@@ -76,7 +76,8 @@ function sendRaw(pipe, makePayload) {
   assert.equal(ready.type, 'ready'); assert.equal(ready.remoteRejected, true);
   assert.match(ready.sid, /^S-1-\d(?:-\d+)+$/);
   assert.equal((ready.dacl.match(/\(/g) || []).length, 1, 'pipe DACL must contain exactly one allow entry');
-  assert.ok(ready.dacl.includes(ready.sid) && !/;;;(?:WD|AN|AU|BU)\)/.test(ready.dacl), 'pipe DACL must grant only the current user');
+  const maskedDacl = ready.dacl.replace(ready.sid, '<current-user>').replace(/S-1-(?:\d+-)*\d+/g, '<other-sid>');
+  assert.ok(ready.dacl.includes(ready.sid) && !/;;;(?:WD|AN|AU|BU)\)/.test(ready.dacl), `pipe DACL must grant only the current user; DACL=${maskedDacl}`);
   const status = await requestPrivateControl(pipe, secret, identity, 'status');
   assert.equal(status.result.ok, true); assert.equal(status.identity.instanceId, identity.instanceId);
   await assert.rejects(requestPrivateControl(pipe, randomBytes(32).toString('base64url'), identity, 'stop'), /身份校验失败/);
