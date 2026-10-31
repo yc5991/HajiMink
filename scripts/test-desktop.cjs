@@ -179,6 +179,7 @@ async function runRemote(origin, script) {
   console.log(`Screenshot: ${screenshot}`);
 })().catch(async error => {
   if (application) {
+    await delay(150);
     const events = await application.evaluate(() => globalThis.desktopMenuTestEvents).catch(() => undefined);
     if (events) console.error('Desktop menu event types:', JSON.stringify(events));
   }
