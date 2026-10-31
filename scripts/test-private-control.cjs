@@ -76,8 +76,19 @@ function sendRaw(pipe, makePayload) {
   assert.equal(ready.type, 'ready'); assert.equal(ready.remoteRejected, true);
   assert.match(ready.sid, /^S-1-\d(?:-\d+)+$/);
   assert.equal((ready.dacl.match(/\(/g) || []).length, 1, 'pipe DACL must contain exactly one allow entry');
-  const maskedDacl = ready.dacl.replace(ready.sid, '<current-user>').replace(/S-1-(?:\d+-)*\d+/g, '<other-sid>');
-  assert.ok(ready.dacl.includes(ready.sid) && !/;;;(?:WD|AN|AU|BU)\)/.test(ready.dacl), `pipe DACL must grant only the current user; DACL=${maskedDacl}`);
+  // Windows can serialize the current account as an SDDL alias such as LA.
+  // Resolve it with Windows before comparing the actual SID, not its display text.
+  const resolveDaclSid = dacl => {
+    const script = '$s=[Console]::In.ReadToEnd(); $a=([System.Security.AccessControl.RawSecurityDescriptor]::new($s)).DiscretionaryAcl; if ($a.Count -ne 1 -or $a[0].AceType -ne [System.Security.AccessControl.AceType]::AccessAllowed) { exit 1 }; [Console]::Out.Write($a[0].SecurityIdentifier.Value)';
+    const result = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], { input: dacl, encoding: 'utf8', windowsHide: true, timeout: 10000 });
+    if (result.status !== 0 || result.error) throw new Error('无法解析安全通道权限');
+    return result.stdout.trim();
+  };
+  assert.equal(resolveDaclSid('D:P(A;;FA;;;SY)'), 'S-1-5-18', 'well-known SDDL aliases must resolve to their SID');
+  assert.match(resolveDaclSid('D:P(A;;FA;;;LA)'), /-500$/, 'local administrator SDDL alias must resolve to its SID');
+  const allowedSid = resolveDaclSid(ready.dacl);
+  assert.equal(allowedSid, ready.sid, 'pipe DACL must grant only the current user');
+  assert.ok(!['S-1-1-0', 'S-1-5-7', 'S-1-5-11', 'S-1-5-32-545'].includes(allowedSid), 'pipe DACL must not grant access to broad groups');
   const status = await requestPrivateControl(pipe, secret, identity, 'status');
   assert.equal(status.result.ok, true); assert.equal(status.identity.instanceId, identity.instanceId);
   await assert.rejects(requestPrivateControl(pipe, randomBytes(32).toString('base64url'), identity, 'stop'), /身份校验失败/);
