@@ -1,5 +1,5 @@
 'use strict';
-const { selectDesktopPage, selectDesktopConnection } = require('./desktop-page-menu.cjs');
+const { openDesktopConnectionMenu, selectDesktopPage, selectDesktopConnection } = require('./desktop-page-menu.cjs');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
@@ -75,6 +75,10 @@ async function runRemote(origin, script) {
   }
   await application.evaluate(({ shell }) => { shell.openExternal = async url => { globalThis.testGuideUrl = url; }; });
   await page.waitForFunction(() => !!document.querySelector('#connection-select')?.dataset.selected);
+  const initialMenu = await openDesktopConnectionMenu(page);
+  const menuClosed = initialMenu.waitForEvent('close');
+  await initialMenu.keyboard.press('Escape').catch(error => { if (!initialMenu.isClosed()) throw error; });
+  await menuClosed;
   assert.deepEqual(await page.locator('#provider option').evaluateAll(options => options.map(option => [option.value, option.textContent])), [['other', '其他已配置地址'], ['self-hosted', '自建服务器'], ['natapp', 'NATAPP'], ['sakurafrp', 'SakuraFrp'], ['tailscale', 'Tailscale'], ['cloudflare', 'Cloudflare Tunnel']]);
   assert.deepEqual(await page.locator('#gateway-provider option').evaluateAll(options => options.map(option => option.value)), ['', 'off', 'natapp', 'sakurafrp', 'tailscale', 'cloudflare', 'self-hosted']);
   const helpGuides = await page.locator('#help-content [data-help-provider]').evaluateAll(links => links.map(link => [link.dataset.helpProvider, link.href]));
