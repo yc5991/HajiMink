@@ -45,15 +45,22 @@ async function runRemote(origin, script) {
   application = await electron.launch({ executablePath: binary, args: appArgs, cwd: path.resolve(__dirname, '..'), timeout: 60000 });
   const page = await application.firstWindow();
   // Keep only event types and source line numbers; connection data is never logged.
-  await application.evaluate(({ app, BrowserWindow, ipcMain }) => {
+  await application.evaluate(({ app, BrowserWindow, ipcMain, webContents }) => {
     const events = globalThis.desktopMenuTestEvents = [];
     const record = event => { events.push(event); if (events.length > 120) events.shift(); };
     const observe = win => {
       const id = win.id;
       for (const name of ['show', 'focus', 'blur', 'resize', 'move', 'hide', 'minimize', 'closed']) win.on(name, () => record(`window:${id}:${name}`));
+      win.on('blur', () => setTimeout(() => record(`focus-after-blur:window=${BrowserWindow.getFocusedWindow()?.id || 'none'}:contents=${webContents.getFocusedWebContents()?.id || 'none'}`), 50));
+    };
+    const observeContents = contents => {
+      const id = contents.id, type = contents.getType();
+      for (const name of ['focus', 'blur', 'destroyed']) contents.on(name, () => record(`contents:${id}:${type}:${name}`));
     };
     for (const win of BrowserWindow.getAllWindows()) observe(win);
+    for (const contents of webContents.getAllWebContents()) observeContents(contents);
     app.on('browser-window-created', (_event, win) => { record(`window:${win.id}:created`); observe(win); });
+    app.on('web-contents-created', (_event, contents) => observeContents(contents));
     for (const channel of ['shell:page-menu-dismiss', 'page-menu:choose', 'page-menu:close', 'workspace:page-menu-dismiss', 'workspace:ready']) ipcMain.on(channel, () => record(`ipc:${channel}`));
     const destroy = BrowserWindow.prototype.destroy;
     BrowserWindow.prototype.destroy = function (...args) {
