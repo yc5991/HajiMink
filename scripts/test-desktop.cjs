@@ -44,6 +44,24 @@ async function runRemote(origin, script) {
   const first = store.snapshot().selected;
   application = await electron.launch({ executablePath: binary, args: appArgs, cwd: path.resolve(__dirname, '..'), timeout: 60000 });
   const page = await application.firstWindow();
+  // Keep only event types and source line numbers; connection data is never logged.
+  await application.evaluate(({ app, BrowserWindow, ipcMain }) => {
+    const events = globalThis.desktopMenuTestEvents = [];
+    const record = event => { events.push(event); if (events.length > 120) events.shift(); };
+    const observe = win => {
+      const id = win.id;
+      for (const name of ['show', 'focus', 'blur', 'resize', 'move', 'hide', 'minimize', 'closed']) win.on(name, () => record(`window:${id}:${name}`));
+    };
+    for (const win of BrowserWindow.getAllWindows()) observe(win);
+    app.on('browser-window-created', (_event, win) => { record(`window:${win.id}:created`); observe(win); });
+    for (const channel of ['shell:page-menu-dismiss', 'page-menu:choose', 'page-menu:close', 'workspace:page-menu-dismiss', 'workspace:ready']) ipcMain.on(channel, () => record(`ipc:${channel}`));
+    const destroy = BrowserWindow.prototype.destroy;
+    BrowserWindow.prototype.destroy = function (...args) {
+      const stack = String(new Error().stack).split('\n').slice(1, 5).map(line => line.match(/(?:main\.cjs|node:electron\/[^:)]+):(\d+):\d+/)?.[0] || '').filter(Boolean);
+      record(`window:${this.id}:destroy:${stack.join(',')}`);
+      return destroy.apply(this, args);
+    };
+  });
   if (process.platform !== 'darwin') {
     await page.keyboard.press('Alt');
     assert.equal(await application.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].isMenuBarVisible()), false, 'native menu must remain hidden, including after Alt');
@@ -152,7 +170,13 @@ async function runRemote(origin, script) {
   assert.equal(await restoredPage.locator('#connection-select span').textContent(), '尚未添加连接');
   console.log('PASS desktop shell: provider setup and connection probe, failed-save rollback, isolated browser contexts, memory-only data, bridge denial, popup and cross-origin blocking, connection switch and CRUD, HTTP error status, single instance' + (hiddenToTray ? ', tray restore' : ', minimize fallback'));
   console.log(`Screenshot: ${screenshot}`);
-})().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
+})().catch(async error => {
+  if (application) {
+    const events = await application.evaluate(() => globalThis.desktopMenuTestEvents).catch(() => undefined);
+    if (events) console.error('Desktop menu event types:', JSON.stringify(events));
+  }
+  console.error(error); process.exitCode = 1;
+}).finally(async () => {
   if (application) await application.close().catch(() => {});
   for (const server of servers) await new Promise(resolve => server.close(resolve));
   const resolved = fs.realpathSync(temp); const safeRoot = fs.realpathSync(os.tmpdir());
