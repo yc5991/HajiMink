@@ -1,0 +1,87 @@
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #fafaf9;
+  --rail: #f5f5f3;
+  --sidebar: #f7f7f5;
+  --line: #e9e9e6;
+  --line-strong: #d8d8d3;
+  --text: #20201e;
+  --secondary: #60605b;
+  --muted: #85857e;
+  --selected: #eaeae6;
+  --hover: #efefeb;
+  --bubble: #f1f1ee;
+  --code: #f6f6f4;
+  --button: #242422;
+  --button-text: #ffffff;
+  --accent: #242422;
+  --accent-wash: #24242212;
+  --success: #438a64;
+  --link: #346d9b;
+  --banner: #faf6e9;
+  --banner-text: #806622;
+  --warning-line: #e6d8b3;
+  --error: #ac352c;
+  --error-bg: #fff2ef;
+  --error-line: #efd6d0;
+  --mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+}
+:root[data-theme=dark] {
+  color-scheme: dark;
+  --bg: #222220;
+  --surface: #2b2b29;
+  --rail: #191918;
+  --sidebar: #1b1b1a;
+  --line: #353532;
+  --line-strong: #4b4b46;
+  --text: #efefeb;
+  --secondary: #b9b9b2;
+  --muted: #94948c;
+  --selected: #353532;
+  --hover: #30302d;
+  --bubble: #32322f;
+  --code: #191918;
+  --button: #efefeb;
+  --button-text: #222220;
+  --accent: #efefeb;
+  --accent-wash: #ffffff12;
+  --success: #70b68e;
+  --link: #8bc2e8;
+  --banner: #332d1f;
+  --banner-text: #d7c48b;
+  --warning-line: #5e5435;
+  --error: #ffb4a8;
+  --error-bg: #392c27;
+  --error-line: #6a443c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]):not([data-theme=dark]) {
+    color-scheme: dark;
+    --bg: #222220;
+    --surface: #2b2b29;
+    --rail: #191918;
+    --sidebar: #1b1b1a;
+    --line: #353532;
+    --line-strong: #4b4b46;
+    --text: #efefeb;
+    --secondary: #b9b9b2;
+    --muted: #94948c;
+    --selected: #353532;
+    --hover: #30302d;
+    --bubble: #32322f;
+    --code: #191918;
+    --button: #efefeb;
+    --button-text: #222220;
+    --accent: #efefeb;
+    --accent-wash: #ffffff12;
+    --success: #70b68e;
+    --link: #8bc2e8;
+    --banner: #332d1f;
+    --banner-text: #d7c48b;
+    --warning-line: #5e5435;
+    --error: #ffb4a8;
+    --error-bg: #392c27;
+    --error-line: #6a443c;
+  }
+}

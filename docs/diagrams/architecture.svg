@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1240" viewBox="0 0 1520 1240" role="img" aria-labelledby="title desc"><title id="title">HajiMink 当前架构</title><desc id="desc">远程入口由用户配置，本机网关转发操作，原 Codex 桌面执行任务</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker></defs><style>text{font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#172554} .edge{fill:none;stroke:#64748b;stroke-width:2} .label{font-size:16px;paint-order:stroke;stroke:white;stroke-width:8;stroke-linejoin:round}</style><rect width="100%" height="100%" fill="#ffffff"/><text x="32" y="32" font-size="26" font-weight="700">HajiMink 当前架构</text><text x="32" y="55" font-size="15" fill="#475569">远程入口由用户配置，本机网关转发操作，原 Codex 桌面执行任务</text>
+<path class="edge" d="M225 192V270" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<path class="edge" d="M1040 151H760V270" marker-end="url(#arrow)"/>
+<path class="edge" d="M1240 192V270" marker-end="url(#arrow)"/>
+<path class="edge" d="M395 322H490V488H590" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<path class="edge" d="M760 352V445" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<path class="edge" d="M1240 370V560H970V620H930" marker-end="url(#arrow)"/>
+<path class="edge" d="M760 531V600" marker-end="url(#arrow)"/>
+<path class="edge" d="M930 643H1040" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<path class="edge" d="M760 686V760" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<path class="edge" d="M760 846V875H440V925" marker-end="url(#arrow)"/>
+<path class="edge" d="M760 846V875H1100V925" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<path class="edge" d="M270 968H135V1090" marker-end="url(#arrow)"/>
+<path class="edge" d="M440 1011V1090" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="55" y="110" width="340" height="82" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="225" y="144" text-anchor="middle" font-size="18"><tspan x="225" dy="0" font-weight="600">远程设备</tspan><tspan x="225" dy="26">浏览器 / HajiMink 客户端</tspan></text>
+<rect x="1040" y="110" width="400" height="82" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1240" y="144" text-anchor="middle" font-size="18"><tspan x="1240" dy="0" font-weight="600">HajiMink 桌面程序</tspan><tspan x="1240" dy="26">网关设置 / 连接管理 / 托盘</tspan></text>
+<rect x="55" y="270" width="340" height="104" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="225" y="302" text-anchor="middle" font-size="18"><tspan x="225" dy="0" font-weight="600">可选的 HTTPS 远程入口</tspan><tspan x="225" dy="26">NATAPP / SakuraFrp / Tailscale</tspan><tspan x="225" dy="26">Cloudflare / 自建中转 / 其他</tspan></text>
+<rect x="590" y="270" width="340" height="82" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="760" y="304" text-anchor="middle" font-size="18"><tspan x="760" dy="0" font-weight="600">React 工作台页面</tspan><tspan x="760" dy="26">项目、会话和实时输出</tspan></text>
+<rect x="1040" y="270" width="400" height="100" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1240" y="300" text-anchor="middle" font-size="18"><tspan x="1240" dy="0" font-weight="600">Windows 后台控制器</tspan><tspan x="1240" dy="26">管理本机网关和用户提供的 NATAPP</tspan><tspan x="1240" dy="26">其他隧道客户端由用户管理</tspan></text>
+<rect x="590" y="445" width="340" height="86" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="760" y="481" text-anchor="middle" font-size="18"><tspan x="760" dy="0" font-weight="600">身份与请求校验</tspan><tspan x="760" dy="26">本机 / 密码与通行密钥 / Access</tspan></text>
+<rect x="590" y="600" width="340" height="86" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="760" y="636" text-anchor="middle" font-size="18"><tspan x="760" dy="0" font-weight="600">Fastify 网关</tspan><tspan x="760" dy="26">业务接口 / 实时连接 / 操作去重</tspan></text>
+<rect x="1040" y="600" width="400" height="86" rx="14" fill="#f1f5f9" stroke="#2563eb" stroke-width="2"/>
+<text x="1240" y="636" text-anchor="middle" font-size="18"><tspan x="1240" dy="0" font-weight="600">网关 SQLite 数据</tspan><tspan x="1240" dy="26">登录、偏好和操作摘要</tspan></text>
+<rect x="590" y="760" width="340" height="86" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="760" y="796" text-anchor="middle" font-size="18"><tspan x="760" dy="0" font-weight="600">Agent 注册与能力检查</tspan><tspan x="760" dy="26">软件选择 / 操作边界 / 隔离</tspan></text>
+<rect x="270" y="925" width="340" height="86" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+<text x="440" y="961" text-anchor="middle" font-size="18"><tspan x="440" dy="0" font-weight="600">Codex 桌面适配器</tspan><tspan x="440" dy="26">按桌面版本限制可用操作</tspan></text>
+<rect x="930" y="925" width="340" height="86" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="1100" y="961" text-anchor="middle" font-size="18"><tspan x="1100" dy="0" font-weight="600">DSH 适配入口</tspan><tspan x="1100" dy="26">真实接入尚未完成</tspan></text>
+<rect x="25" y="1090" width="220" height="86" rx="14" fill="#f1f5f9" stroke="#2563eb" stroke-width="2"/>
+<text x="135" y="1126" text-anchor="middle" font-size="18"><tspan x="135" dy="0" font-weight="600">Codex 本机数据</tspan><tspan x="135" dy="26">只读目录元数据</tspan></text>
+<rect x="270" y="1090" width="340" height="86" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+<text x="440" y="1126" text-anchor="middle" font-size="18"><tspan x="440" dy="0" font-weight="600">Codex 桌面程序</tspan><tspan x="440" dy="26">原项目 / 原会话 / 执行</tspan></text>
+<text class="label" x="922" y="139" text-anchor="middle">打开工作台</text>
+<text class="label" x="465" y="400" text-anchor="middle">HTTPS 转发</text>
+<text class="label" x="1090" y="548" text-anchor="middle">启停与状态</text>
+<text class="label" x="535" y="863" text-anchor="middle">已接入</text>
+<text class="label" x="1000" y="863" text-anchor="middle">预留</text>
+<text class="label" x="158" y="1025" text-anchor="middle">只读</text>
+<text class="label" x="504" y="1052" text-anchor="middle">桌面接口</text>
+<text x="32" y="1222" font-size="14">实线：已实现的连接　　虚线：预留接入　　远程服务商和真实设备仍需分别验收</text></svg>

@@ -1,0 +1,37 @@
+{
+  "directories": [
+    ".github",
+    "docs",
+    "scripts",
+    "server",
+    "shared",
+    "src",
+    "tests",
+    "desktop"
+  ],
+  "files": [
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    "LICENSE",
+    "README.md",
+    "ADAPTERS.md",
+    "VERIFICATION.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "config.example.json",
+    "config.dev.json",
+    "config.owner.example.json",
+    "config.access.example.json",
+    "index.html",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "tsup.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "release-files.json",
+    "desktop-builder.json"
+  ]
+}

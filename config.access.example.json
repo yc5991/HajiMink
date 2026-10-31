@@ -1,0 +1,8 @@
+{
+  "mode": "access",
+  "port": 3000,
+  "publicOrigin": "https://agent.example.com",
+  "accessIssuer": "https://YOUR-TEAM.cloudflareaccess.com",
+  "accessAudience": "REPLACE_WITH_REAL_APPLICATION_AUD",
+  "allowedEmail": "REPLACE_WITH_OWNER_EMAIL"
+}

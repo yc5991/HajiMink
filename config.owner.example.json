@@ -1,0 +1,5 @@
+{
+  "mode": "owner",
+  "port": 3000,
+  "publicOrigin": "https://agent.example.com"
+}

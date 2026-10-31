@@ -1,0 +1,24 @@
+'use strict';
+// Prepare only the isolated desktop fixture. Never read from production dist.
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const { spawnSync } = require('node:child_process');
+const root = path.resolve(__dirname, '..');
+const stage = path.join(root, '.local', 'hajimink-stage');
+const expected = '3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237';
+if (process.platform !== 'win32' || process.arch !== 'x64') throw new Error('Windows x64 运行环境必须在 Windows x64 上准备');
+if (!fs.existsSync(path.join(stage, 'dist', 'index.html')) || !fs.existsSync(path.join(stage, 'dist-server', 'index.js'))) throw new Error('请先生成隔离的桌面构建');
+const runtime = process.env.HAJIMINK_NODE24_PATH || process.execPath;
+const hash = crypto.createHash('sha256').update(fs.readFileSync(runtime)).digest('hex');
+if (hash !== expected) throw new Error('Node.js 运行环境不是已核对的 Windows x64 24.19.0 版本');
+const npm = process.env.npm_execpath;
+if (!npm || !fs.existsSync(npm)) throw new Error('请通过 npm 脚本准备桌面运行环境');
+for (const name of ['package.json', 'package-lock.json']) fs.copyFileSync(path.join(root, name), path.join(stage, name));
+const install = spawnSync(process.execPath, [npm, 'ci', '--omit=dev', '--ignore-scripts', '--no-audit', '--no-fund'], { cwd: stage, stdio: 'inherit', windowsHide: true });
+if (install.error || install.status !== 0) throw new Error('隔离目录的生产依赖安装失败');
+const runtimeDir = path.join(stage, 'runtime');
+fs.mkdirSync(runtimeDir, { recursive: true });
+fs.copyFileSync(runtime, path.join(runtimeDir, 'node.exe'));
+if (crypto.createHash('sha256').update(fs.readFileSync(path.join(runtimeDir, 'node.exe'))).digest('hex') !== expected) throw new Error('运行环境复制校验失败');
+console.log('隔离桌面运行环境已准备：Node.js 24.19.0、锁定的生产依赖和网页构建');

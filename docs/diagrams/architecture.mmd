@@ -1,0 +1,32 @@
+flowchart TD
+  remote["远程设备<br/>浏览器 / HajiMink 客户端"]
+  shell["HajiMink 桌面程序<br/>网关设置 / 连接管理 / 托盘"]
+  tunnel["可选的 HTTPS 远程入口<br/>NATAPP / SakuraFrp / Tailscale<br/>Cloudflare / 自建中转 / 其他"]
+  workspace["React 工作台页面<br/>项目、会话和实时输出"]
+  controller["Windows 后台控制器<br/>管理本机网关和用户提供的 NATAPP<br/>其他隧道客户端由用户管理"]
+  security["身份与请求校验<br/>本机 / 密码与通行密钥 / Access"]
+  api["Fastify 网关<br/>业务接口 / 实时连接 / 操作去重"]
+  store["网关 SQLite 数据<br/>登录、偏好和操作摘要"]
+  registry["Agent 注册与能力检查<br/>软件选择 / 操作边界 / 隔离"]
+  codex["Codex 桌面适配器<br/>按桌面版本限制可用操作"]
+  dsh["DSH 适配入口<br/>真实接入尚未完成"]
+  metadata["Codex 本机数据<br/>只读目录元数据"]
+  desktop["Codex 桌面程序<br/>原项目 / 原会话 / 执行"]
+  remote <--> tunnel
+  shell -->|打开工作台| workspace
+  shell --> controller
+  tunnel <-->|HTTPS 转发| security
+  workspace <--> security
+  controller -->|启停与状态| api
+  security --> api
+  api <--> store
+  api <--> registry
+  registry -->|已接入| codex
+  registry -.->|预留| dsh
+  codex -->|只读| metadata
+  codex <-->|桌面接口| desktop
+  classDef implemented fill:#f0fdf4,stroke:#16a34a,color:#172554
+  classDef planned fill:#fffbeb,stroke:#d97706,stroke-dasharray:7 5,color:#172554
+  class codex implemented
+  class dsh planned
+  class desktop implemented

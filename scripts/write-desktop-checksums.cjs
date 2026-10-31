@@ -1,0 +1,13 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const root = path.resolve(__dirname, '..');
+const directory = path.resolve(process.env.HAJIMINK_DESKTOP_OUTPUT || path.join(root, 'output', 'hajimink-desktop-build'));
+if (!directory.startsWith(root + path.sep)) throw new Error('桌面包输出目录必须位于项目目录内');
+const names = fs.readdirSync(directory).filter(name => /\.(?:exe|zip)$/i.test(name)).sort();
+if (!names.length) throw new Error(`找不到桌面包：${directory}`);
+const lines = names.map(name => `${crypto.createHash('sha256').update(fs.readFileSync(path.join(directory, name))).digest('hex')}  ${name}`);
+fs.writeFileSync(path.join(directory, 'SHA256SUMS.txt'), `${lines.join('\n')}\n`, 'utf8');
+console.log(`SHA-256 校验文件已生成：${path.join(directory, 'SHA256SUMS.txt')}`);
+console.log(lines.join('\n'));

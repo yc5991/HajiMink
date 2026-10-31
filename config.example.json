@@ -1,0 +1,5 @@
+{
+  "mode": "local",
+  "port": 3000,
+  "publicOrigin": "http://localhost:3000"
+}

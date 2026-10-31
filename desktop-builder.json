@@ -1,0 +1,77 @@
+{
+  "appId": "app.hajimink.desktop",
+  "productName": "HajiMink",
+  "asar": true,
+  "npmRebuild": false,
+  "directories": {
+    "output": "output/hajimink-desktop-build",
+    "buildResources": "desktop/assets"
+  },
+  "files": [
+    "desktop/**/*",
+    "package.json",
+    "!desktop/tunnel-manager.cjs",
+    "!node_modules/**/*"
+  ],
+  "artifactName": "HajiMink-${version}-${os}-${arch}-desktop-shell.${ext}",
+  "win": {
+    "icon": "desktop/assets/icon.ico",
+    "target": [
+      "nsis",
+      "zip"
+    ],
+    "extraResources": [
+      { "from": "LICENSE", "to": "licenses/HajiMink-LICENSE.txt" },
+      { "from": "docs/DEPENDENCIES.md", "to": "licenses/DEPENDENCIES.md" },
+      { "from": "src/assets/README.md", "to": "licenses/BRAND-ASSETS.md" },
+      {
+        "from": ".local/hajimink-stage",
+        "to": "gateway",
+        "filter": [
+          "dist/**/*",
+          "dist-server/**/*",
+          "package.json",
+          "package-lock.json",
+          "runtime/node.exe",
+          "controller/**/*"
+        ]
+      },
+      {
+        "from": ".local/hajimink-stage/node_modules",
+        "to": "gateway/node_modules",
+        "filter": [
+          "**/*",
+          "!node-pty/prebuilds/!(win32-x64)/**/*",
+          "!node-pty/third_party/conpty/**/win10-arm64/**/*",
+          "!**/*.pdb",
+          "!**/*.map",
+          "!**/*.d.ts",
+          "!**/*.d.cts",
+          "!**/*.d.mts"
+        ]
+      }
+    ]
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "shortcutName": "HajiMink"
+  },
+  "mac": {
+    "target": [
+      "dmg",
+      "zip"
+    ],
+    "category": "public.app-category.productivity"
+  },
+  "linux": {
+    "icon": "desktop/assets/icon.png",
+    "target": [
+      "AppImage",
+      "deb"
+    ],
+    "category": "Utility"
+  },
+  "electronDist": "node_modules/electron/dist"
+}

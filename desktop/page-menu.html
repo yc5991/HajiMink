@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>切换页面</title>
+  <link rel="stylesheet" href="./page-menu.css">
+  <script defer src="./page-menu.js"></script>
+</head>
+<body>
+  <div class="menu-surface" role="menu" aria-label="切换页面" hidden>
+    <div class="menu-heading" aria-hidden="true">切换页面</div>
+    <div class="menu-items">
+    <button type="button" role="menuitemradio" data-page="workspace" aria-checked="false" tabindex="-1"><span>工作台</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button>
+    <button type="button" role="menuitemradio" data-page="gateway" aria-checked="false" tabindex="-1"><span>网关</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button>
+    <button type="button" role="menuitemradio" data-page="logs" aria-checked="false" tabindex="-1"><span>日志</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button>
+    <button type="button" role="menuitemradio" data-page="settings" aria-checked="false" tabindex="-1"><span>设置</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></button>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+:root{color-scheme:light;--surface:#fff;--text:#202123;--sub:#8b8c90;--border:#dedede;--hover:#f1f1f1;--shadow:#0002;--focus:#717171}
+:root[data-theme="dark"]{color-scheme:dark;--surface:#292929;--text:#ececec;--sub:#aaa;--border:#474747;--hover:#3b3b3b;--shadow:#0008;--focus:#b4b4b4}
+*{box-sizing:border-box;scrollbar-width:none!important}*::-webkit-scrollbar{display:none!important}
+html,body{width:100%;height:100%;margin:0;background:transparent;color:var(--text);font:14px/1.4 "Segoe UI","Microsoft YaHei",sans-serif}
+.menu-surface{display:flex;flex-direction:column;max-height:calc(100% - 16px);margin:8px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:0 5px 18px var(--shadow),0 1px 4px var(--shadow)}
+.menu-surface[hidden]{display:none}.menu-heading{flex:none;height:30px;padding:5px 10px;color:var(--sub)}
+.menu-items{min-height:0;overflow:auto;overscroll-behavior:contain}
+button{display:flex;align-items:center;justify-content:space-between;width:100%;height:40px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+button:hover,:root[data-keyboard="true"] button:focus-visible{background:var(--hover)}
+button:focus{outline:none}:root[data-keyboard="true"] button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+button span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}button svg{flex:none;width:18px;height:18px;margin-left:8px;visibility:hidden;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+button[aria-checked="true"] svg{visibility:visible}

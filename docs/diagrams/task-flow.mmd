@@ -1,0 +1,28 @@
+flowchart TD
+  input["用户选择软件、项目和会话<br/>发送消息 / 补充要求"]
+  gate["检查登录、来源与输入<br/>保留原会话和请求标识"]
+  supported{"软件已接入<br/>且支持该动作？"}
+  unavailable["DSH 当前返回尚未接入<br/>网页禁用发送"]
+  operation["记录唯一 operationId<br/>重复操作返回既有结果或冲突"]
+  native["原会话管理进程接收动作<br/>任务按桌面权限执行"]
+  unknown["超时 / 断线：结果待核实<br/>保留草稿，不自动重发<br/>用户查看原会话后决定"]
+  approval{"桌面要求<br/>审批或回答？"}
+  answer["网页转交已有请求<br/>权限扩展与复杂表单回桌面"]
+  continue["原桌面决定后续执行<br/>状态继续留在同一会话"]
+  stream["裁剪后的快照与版本号<br/>通过 WebSocket 更新网页"]
+  input --> gate
+  gate --> supported
+  supported -->|否| unavailable
+  supported -->|是| operation
+  operation --> native
+  native -->|结果未知| unknown
+  native --> approval
+  approval -->|是| answer
+  approval -->|否 / 已获准| continue
+  answer -->|绑定原请求回应| continue
+  continue --> stream
+  classDef implemented fill:#f0fdf4,stroke:#16a34a,color:#172554
+  classDef planned fill:#fffbeb,stroke:#d97706,stroke-dasharray:7 5,color:#172554
+  class unavailable planned
+  class native implemented
+  class continue implemented

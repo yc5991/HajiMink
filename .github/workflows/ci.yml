@@ -1,0 +1,34 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24.19.0
+          cache: npm
+      - run: npm ci
+      - run: npm run check:release
+      - run: npm run package:desktop:win:dir
+      - run: npm run check:desktop-release -- output/hajimink-desktop-build/win-unpacked
+      - run: npm test
+      - run: npm run test:private-control
+      - run: npm run build:desktop:fixture
+      - run: npm run test:gateway-manager
+      - run: npm run test:controller
+      - run: npm run test:tunnel-manager
+      - run: npm run test:desktop
+      - run: npm run test:desktop:controller
+      - run: npm run build

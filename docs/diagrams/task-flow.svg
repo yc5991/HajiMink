@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc"><title id="title">消息从网页进入原桌面的流程</title><desc id="desc">执行状态以原桌面为准，结果不明确时交给用户核实</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker></defs><style>text{font-family:'Microsoft YaHei','PingFang SC','Noto Sans CJK SC',sans-serif;fill:#172554} .edge{fill:none;stroke:#64748b;stroke-width:2} .label{font-size:16px;paint-order:stroke;stroke:white;stroke-width:8;stroke-linejoin:round}</style><rect width="100%" height="100%" fill="#ffffff"/><text x="32" y="32" font-size="26" font-weight="700">消息从网页进入原桌面的流程</text><text x="32" y="55" font-size="15" fill="#475569">执行状态以原桌面为准，结果不明确时交给用户核实</text>
+<path class="edge" d="M600 140V180" marker-end="url(#arrow)"/>
+<path class="edge" d="M600 255V305" marker-end="url(#arrow)"/>
+<path class="edge" d="M720 365H875" marker-end="url(#arrow)"/>
+<path class="edge" d="M600 425V485" marker-end="url(#arrow)"/>
+<path class="edge" d="M600 560V615" marker-end="url(#arrow)"/>
+<path class="edge" d="M780 652H875" marker-end="url(#arrow)"/>
+<path class="edge" d="M600 690V755" marker-end="url(#arrow)"/>
+<path class="edge" d="M480 815H360" marker-end="url(#arrow)"/>
+<path class="edge" d="M600 875V950" marker-end="url(#arrow)"/>
+<path class="edge" d="M210 865V985H420" marker-end="url(#arrow)"/>
+<path class="edge" d="M600 1020V1080" marker-end="url(#arrow)"/>
+<rect x="420" y="70" width="360" height="70" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600" y="98" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">用户选择软件、项目和会话</tspan><tspan x="600" dy="26">发送消息 / 补充要求</tspan></text>
+<rect x="420" y="180" width="360" height="75" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600" y="210.5" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">检查登录、来源与输入</tspan><tspan x="600" dy="26">保留原会话和请求标识</tspan></text>
+<polygon points="600,305 720,365 600,425 480,365" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600" y="358" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">软件已接入</tspan><tspan x="600" dy="26">且支持该动作？</tspan></text>
+<rect x="875" y="325" width="280" height="85" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="1015" y="360.5" text-anchor="middle" font-size="18"><tspan x="1015" dy="0" font-weight="600">DSH 当前返回尚未接入</tspan><tspan x="1015" dy="26">网页禁用发送</tspan></text>
+<rect x="420" y="485" width="360" height="75" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600" y="515.5" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">记录唯一 operationId</tspan><tspan x="600" dy="26">重复操作返回既有结果或冲突</tspan></text>
+<rect x="420" y="615" width="360" height="75" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+<text x="600" y="645.5" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">原会话管理进程接收动作</tspan><tspan x="600" dy="26">任务按桌面权限执行</tspan></text>
+<rect x="875" y="600" width="280" height="110" rx="14" fill="#f1f5f9" stroke="#2563eb" stroke-width="2"/>
+<text x="1015" y="635" text-anchor="middle" font-size="18"><tspan x="1015" dy="0" font-weight="600">超时 / 断线：结果待核实</tspan><tspan x="1015" dy="26">保留草稿，不自动重发</tspan><tspan x="1015" dy="26">用户查看原会话后决定</tspan></text>
+<polygon points="600,755 720,815 600,875 480,815" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600" y="808" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">桌面要求</tspan><tspan x="600" dy="26">审批或回答？</tspan></text>
+<rect x="60" y="770" width="300" height="95" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="210" y="810.5" text-anchor="middle" font-size="18"><tspan x="210" dy="0" font-weight="600">网页转交已有请求</tspan><tspan x="210" dy="26">权限扩展与复杂表单回桌面</tspan></text>
+<rect x="420" y="950" width="360" height="70" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+<text x="600" y="978" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">原桌面决定后续执行</tspan><tspan x="600" dy="26">状态继续留在同一会话</tspan></text>
+<rect x="420" y="1080" width="360" height="70" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600" y="1108" text-anchor="middle" font-size="18"><tspan x="600" dy="0" font-weight="600">裁剪后的快照与版本号</tspan><tspan x="600" dy="26">通过 WebSocket 更新网页</tspan></text>
+<text class="label" x="795" y="352" text-anchor="middle">否</text>
+<text class="label" x="622" y="461" text-anchor="middle">是</text>
+<text class="label" x="825" y="638" text-anchor="middle">结果未知</text>
+<text class="label" x="415" y="802" text-anchor="middle">是</text>
+<text class="label" x="664" y="915" text-anchor="middle">否 / 已获准</text>
+<text class="label" x="300" y="972" text-anchor="middle">绑定原请求回应</text>
+<text x="32" y="1182" font-size="14">此图展示消息路径；停止和设置分别转交原桌面的对应动作</text></svg>

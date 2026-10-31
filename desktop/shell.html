@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>HajiMink · 哈基米 AI 工作台</title><link rel="stylesheet" href="./shell.css"><link rel="stylesheet" href="./help.css"><script defer src="./providers.js"></script><script defer src="./help-content.js"></script><script defer src="./shell.js"></script></head>
+<body data-page="workspace">
+<div class="app">
+  <section class="main">
+    <header class="topbar">
+      <div class="top-left">
+        <button id="dock-brand" class="dock-brand" type="button" aria-label="返回工作台" title="返回工作台"><img src="./icon.png" alt=""><strong>HajiMink</strong></button>
+        <button id="shell-sidebar-open" class="sidebar-toggle" type="button" aria-label="隐藏侧边栏" title="隐藏侧边栏" aria-controls="workspace-sidebar" aria-expanded="true" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path><path d="m16 15-3-3 3-3"></path></svg></button>
+        <button id="dock-search" class="sidebar-toggle" type="button" aria-label="搜索项目和会话" title="搜索项目和会话（Ctrl K）" hidden><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+        <button id="connection-select" type="button" aria-label="选择工作台连接" aria-haspopup="menu" aria-expanded="false" disabled><span>尚未添加连接</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+      </div>
+      <div id="workspace-header" class="workspace-header" hidden><span id="workspace-header-name"></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg><strong id="workspace-header-title"></strong><span id="workspace-header-state" class="workspace-header-state" role="status"></span><button id="workspace-cli-action" class="workspace-cli-action" type="button" hidden><svg id="workspace-cli-start" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3 20 12 6 21 6 3Z"></path></svg><svg id="workspace-cli-stop" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg></button></div>
+      <div class="top-actions"><span id="connection-status" class="status" role="status"><i></i><span>正在启动</span></span><button id="authorize" class="button">授权设备</button><button id="reload" class="button subtle">重新连接</button></div>
+    </header>
+    <main class="body" id="body">
+      <div class="pages">
+        <section id="workspace" class="page workspace-page" aria-label="Agent 工作台"><div id="view-slot" class="view-slot"><div class="workspace-fallback" role="status" aria-live="polite"><strong id="fallback-title">工作台连接</strong><p id="fallback-detail">请选择或添加连接。</p><div class="fallback-actions"><button id="fallback-settings" class="button primary" type="button">管理连接</button><button id="fallback-retry" class="button" type="button" hidden>重新连接</button></div></div></div></section>
+        <section id="settings" class="page settings-page" aria-label="设置中心" hidden>
+          <div class="settings-layout">
+            <aside class="settings-sidebar">
+              <button id="settings-back" class="settings-back" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>返回工作台</button>
+              <div class="settings-heading"><span>SETTINGS</span><strong>设置</strong></div>
+              <nav class="settings-navigation" aria-label="设置分类"><button type="button" data-settings-section="interface" aria-current="page">界面</button><button type="button" data-settings-section="connections">连接</button><button type="button" data-settings-section="gateway">网关</button><button type="button" data-settings-section="documentation">文档</button><button type="button" data-settings-section="logs">日志</button><button type="button" data-settings-section="about">关于</button></nav>
+            </aside>
+            <div class="settings-content">
+              <section id="settings-interface" class="settings-section panel-page" aria-labelledby="interface-title">
+                <div class="page-heading"><span class="eyebrow">APPEARANCE</span><h1 id="interface-title">界面</h1></div>
+                <section class="gateway-setup-card appearance-card" aria-labelledby="theme-title"><h2 id="theme-title">主题</h2><div class="theme-options" role="radiogroup" aria-label="界面主题"><label><input type="radio" name="theme" value="system"><span><strong>跟随系统</strong></span></label><label><input type="radio" name="theme" value="light"><span><strong>浅色</strong></span></label><label><input type="radio" name="theme" value="dark"><span><strong>深色</strong></span></label></div><p id="theme-feedback" role="status" aria-live="polite"></p></section>
+              </section>
+              <section id="settings-connections" class="settings-section panel-page" aria-labelledby="connections-title" hidden><div class="page-heading row"><div><span class="eyebrow">CONNECTIONS</span><h1 id="connections-title">连接</h1></div><button id="add" class="button primary">添加连接</button></div><div class="section-title"><h2>我的连接</h2><span id="connection-count"></span></div><div id="connection-list" class="connection-list"></div></section>
+              <section id="gateway" class="settings-section panel-page" hidden>
+                <div class="page-heading"><span class="eyebrow">LOCAL HOST</span><h1>本机网关</h1></div>
+                <div class="gateway-settings">
+                  <section class="gateway-setting" aria-labelledby="gateway-port-title">
+                    <h2 id="gateway-port-title">网关地址</h2>
+                    <div class="gateway-setting-content">
+                      <form id="gateway-port-form"><div class="gateway-local-controls"><label class="gateway-host" for="gateway-port-input">127.0.0.1 :</label><input id="gateway-port-input" aria-label="网关端口" type="number" inputmode="numeric" min="1024" max="65535" step="1" required><button id="gateway-port-save" class="button" type="submit">保存</button><label class="gateway-switch"><input id="gateway-toggle" type="checkbox" role="switch"><span aria-hidden="true"></span><strong>启用网关</strong></label></div><p id="gateway-port-feedback" class="gateway-feedback" role="status" aria-live="polite"></p></form>
+                      <div id="gateway-error" class="error-inline" role="alert" hidden></div>
+                    </div>
+                  </section>
+                  <section class="gateway-setting" aria-labelledby="tunnel-guide-title">
+                    <h2 id="tunnel-guide-title">远程访问</h2>
+                    <div class="gateway-setting-content">
+                      <label class="visually-hidden" for="gateway-provider">连接方式</label><select id="gateway-provider"><option value="">选择连接方式</option></select>
+                      <div id="gateway-remote-fields" class="gateway-remote-fields" hidden>
+                        <form id="gateway-owner-form"><label class="visually-hidden" for="gateway-public-origin">访问地址或服务器 IP</label><div class="gateway-address-controls"><input id="gateway-public-origin" type="text" inputmode="url" autocomplete="off" spellcheck="false" maxlength="2048" placeholder="https:// 或服务器 IP" required aria-describedby="gateway-owner-help gateway-origin-draft"><button type="button" id="gateway-remote-test" class="button">检测连接</button></div><p id="gateway-remote-test-feedback" class="gateway-feedback" role="status" aria-live="polite"></p><p id="gateway-origin-draft" class="gateway-feedback" role="status" aria-live="polite" hidden></p><button type="button" id="gateway-origin-reset" class="text-action" hidden>恢复已保存地址</button>
+                          <div class="gateway-auth-controls"><label id="gateway-auth-label" for="gateway-auth-method">登录方式</label><select id="gateway-auth-method"><option value="password">密码</option><option value="passkey">通行密钥</option></select><button type="button" id="gateway-account" class="button">设置密码</button><button id="gateway-owner-enable" class="button primary" type="submit">启用登录</button><button type="button" id="gateway-passkey-start" class="button primary">设置通行密钥</button></div><p id="gateway-owner-help" class="gateway-feedback">通行密钥需要 HTTPS 域名；IP 地址请使用密码。</p><p id="gateway-owner-feedback" class="gateway-feedback" role="status" aria-live="polite"></p></form>
+                        <div id="gateway-safety" class="gateway-warning" role="status"><strong id="gateway-safety-title" hidden></strong><span id="gateway-safety-detail">远程登录未启用，请勿公开网关。</span></div>
+                        <details class="gateway-address-help"><summary>还没有访问地址？</summary><button type="button" id="gateway-no-address" class="button">先保护网关</button></details>
+                        <div id="gateway-setup-code-panel" class="gateway-setup-code" tabindex="-1" hidden><strong>一次性设置码</strong><p id="gateway-setup-code-origin"></p><output id="gateway-setup-code" aria-label="一次性设置码"></output><p id="gateway-setup-code-expiry"></p><p>请核对地址并手动输入设置码，切勿分享。</p><button type="button" id="gateway-open-setup" class="button primary" aria-describedby="gateway-setup-code-origin gateway-setup-code-expiry gateway-open-setup-feedback">在浏览器打开设置页面</button><p id="gateway-open-setup-feedback" role="status" aria-live="polite"></p></div>
+                      </div>
+                      <details id="natapp-manager-card" class="gateway-extra" hidden><summary>NATAPP 客户端</summary><div class="gateway-extra-content"><div class="gateway-guide-actions"><button type="button" id="natapp-select-binary" class="button">选择 natapp.exe</button><button type="button" id="natapp-select-config" class="button">选择 .ini 配置文件</button></div><p class="natapp-path">客户端：<span id="natapp-binary-path">尚未选择</span></p><p class="natapp-path">配置文件：<span id="natapp-config-path">尚未选择</span></p><div class="gateway-guide-actions"><button type="button" id="natapp-save" class="button">保存所选文件</button><button type="button" id="natapp-start" class="button primary">启动 NATAPP</button><button type="button" id="natapp-stop" class="button">停止 NATAPP</button><button type="button" id="natapp-refresh" class="button subtle">刷新状态</button></div><p id="natapp-feedback" class="gateway-feedback" role="status" aria-live="polite"></p><p id="natapp-state" class="gateway-feedback" role="status" aria-live="polite"></p></div></details>
+                    </div>
+                  </section>
+                </div>
+              </section>
+              <section id="settings-documentation" class="settings-section panel-page" aria-labelledby="documentation-title" hidden><div class="page-heading"><span class="eyebrow">DOCUMENTATION</span><h1 id="documentation-title">文档</h1></div><article id="help-content" class="help-content"></article></section>
+              <section id="logs" class="settings-section panel-page" hidden><div class="page-heading row"><div><span class="eyebrow">ACTIVITY</span><h1>运行日志</h1></div><div class="gateway-actions"><button id="gateway-restart" class="button">重启网关</button><button id="logs-refresh" class="button subtle">刷新日志</button></div></div>
+                <div class="diagnostic-list">
+                  <section class="diagnostic-row"><div class="diagnostic-heading"><h2>网关</h2><span id="gateway-state-badge" class="tag">未启动</span></div><strong id="gateway-state-message">本机网关未启动</strong><p id="gateway-manual-stop-note" class="desktop-status-detail" role="status" aria-live="polite" hidden></p><button id="gateway-keep-stopped" class="button" type="button" hidden>保持停止</button><dl><div><dt>地址</dt><dd id="gateway-origin">-</dd></div><div><dt>端口</dt><dd id="gateway-port">-</dd></div><div><dt>进程</dt><dd id="gateway-process">未接管</dd></div></dl></section>
+                  <section class="diagnostic-row" aria-label="Codex 桌面连接状态"><div class="diagnostic-heading"><h2>Codex 桌面</h2><span id="desktop-state-badge" class="tag">未检测</span></div><div role="status" aria-live="polite"><strong id="desktop-state-message">启动网关后检查</strong><p id="desktop-state-detail" class="desktop-status-detail"></p></div><dl><div><dt>桌面版本</dt><dd id="desktop-state-version">未检测到</dd></div></dl></section>
+                  <section class="diagnostic-row" aria-label="远程入口检查状态"><div class="diagnostic-heading"><h2>远程入口</h2><span id="tunnel-status-badge" class="tag">未选择</span></div><div role="status" aria-live="polite"><strong id="tunnel-status-message">请选择连接方式</strong><p id="tunnel-status-detail" class="desktop-status-detail"></p><p id="tunnel-draft-result" class="desktop-status-detail"></p><p id="gateway-auth-status" class="desktop-status-detail"></p></div><dl><div><dt>连接方式</dt><dd id="tunnel-status-provider">未选择</dd></div><div><dt>已保存地址</dt><dd id="tunnel-status-origin">尚未保存</dd></div><div><dt>实时连接</dt><dd id="tunnel-status-stream">未检查</dd></div><div><dt>最近检查</dt><dd id="tunnel-status-time">尚未检查</dd></div></dl><p class="status-boundary desktop-status-detail">检查结果不代表隧道进程的实时状态。</p></section>
+                </div><pre id="logs-output" class="logs-output" aria-label="本机网关运行日志">正在读取日志…</pre></section>
+              <section id="settings-about" class="settings-section panel-page" aria-labelledby="about-title" hidden><div class="page-heading"><span class="eyebrow">ABOUT</span><h1 id="about-title">关于</h1><small id="version"></small></div><section class="notice-card exit-settings" aria-labelledby="exit-settings-title"><h2 id="exit-settings-title">退出软件</h2><div class="exit-actions"><button id="settings-exit" class="button" type="button">退出软件</button></div><p id="settings-exit-feedback" class="exit-feedback" role="status" aria-live="polite"></p></section></section>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </section>
+</div>
+<dialog id="connection-dialog" aria-labelledby="dialog-title">
+  <form id="connection-form">
+    <h2 id="dialog-title">添加连接</h2>
+    <label for="provider">连接方式</label>
+    <select id="provider"></select>
+    <button type="button" id="provider-guide" class="guide-link" hidden>在浏览器打开官方配置指南</button>
+    <label for="name">连接名称</label><input id="name" maxlength="40" required placeholder="例如：办公室电脑" autocomplete="off">
+    <label for="url">网关地址或服务器 IP</label>
+    <input id="url" type="text" inputmode="url" maxlength="2048" required placeholder="203.0.113.10:443 或 https://gateway.example.com" autocomplete="off" spellcheck="false" aria-describedby="address-hint">
+    <p class="field-hint" id="address-hint">默认使用 HTTPS；地址不含路径或参数。</p>
+    <div class="probe-row"><button type="button" id="test-connection" class="button">测试连接</button><span id="probe-status" role="status" aria-live="polite"></span></div>
+    <p id="form-error" class="form-error" role="alert"></p>
+    <div class="dialog-actions"><button type="button" id="cancel" class="button subtle">取消</button><button type="submit" class="button primary">保存并连接</button></div>
+  </form>
+</dialog>
+<dialog id="authorization-dialog" aria-labelledby="authorization-title"><h2 id="authorization-title">连接远程设备</h2><p id="authorization-address"></p><div id="authorization-code" class="authorization-code" aria-label="设备确认码" hidden></div><p id="authorization-message" role="status">正在申请连接…</p><p class="authorization-hint">请在自己的浏览器中登录并核对确认码。</p><div class="dialog-actions"><button type="button" id="authorization-close" class="button">取消</button></div></dialog>
+<div id="toast" role="alert" hidden></div>
+</body></html>

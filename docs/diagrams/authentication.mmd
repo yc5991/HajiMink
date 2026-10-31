@@ -1,0 +1,23 @@
+flowchart TD
+  request["浏览器发起业务请求"]
+  mode{"读取运行模式"}
+  local["local 本机模式<br/>环回地址与本机访问检查"]
+  owner["owner 独立登录<br/>密码 / 通行密钥建立登录<br/>业务请求校验会话 Cookie"]
+  access["access 账户验证<br/>JWT 签名 / 应用标识<br/>签发方 / 所有者邮箱"]
+  checks["主机名、来源与 CSRF 检查<br/>实时连接也检查来源"]
+  valid{"全部检查通过？"}
+  deny["拒绝未授权请求<br/>401 / 403，按原因重新验证"]
+  business["进入受限业务接口<br/>继续核对软件能力与请求状态"]
+  request --> mode
+  mode -->|local| local
+  mode -->|owner| owner
+  mode -->|access| access
+  local --> checks
+  owner --> checks
+  access --> checks
+  checks --> valid
+  valid -->|否| deny
+  valid -->|是| business
+  classDef implemented fill:#f0fdf4,stroke:#16a34a,color:#172554
+  classDef planned fill:#fffbeb,stroke:#d97706,stroke-dasharray:7 5,color:#172554
+  class business implemented
