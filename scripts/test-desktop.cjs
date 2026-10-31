@@ -150,9 +150,20 @@ async function runRemote(origin, script) {
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: '删除 拒绝访问的测试网关' }).click();
   await page.waitForFunction(() => document.querySelector('#connection-count').textContent === '2 个连接');
-  // Removing the selected connection asynchronously loads the fallback view.
-  // Wait for that load, not just the updated list, before interacting with its menu.
   await page.locator('#connection-status.ready').waitFor();
+  // The popup closes on OS blur; verify its parent is active after confirmation.
+  await application.evaluate(async ({ BrowserWindow }) => {
+    const win = BrowserWindow.getAllWindows()[0];
+    win.focus();
+    if (!win.isFocused()) {
+      await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => { win.off('focus', focused); reject(new Error('Desktop window did not regain focus')); }, 5000);
+        const focused = () => { clearTimeout(timer); resolve(); };
+        win.once('focus', focused); win.focus();
+        if (win.isFocused()) { win.off('focus', focused); focused(); }
+      });
+    }
+  });
   await selectDesktopConnection(page, first); await remoteContents(origin);
   assert.equal(await runRemote(origin, 'localStorage.getItem("connection-test")'), 'first', 'switching back retains only this connection storage during the run');
   const hiddenToTray = await application.evaluate(({ BrowserWindow }) => {
